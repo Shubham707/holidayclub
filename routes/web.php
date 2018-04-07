@@ -47,5 +47,7 @@ Route::get('/configuration-detail/delete-config/{id}','ConfigurationController@d
 Route::get('/configuration-detail/edit-config/{id}','ConfigurationController@edit')->name('edit');
 
 
+Route::get('generate-pdf', 'PdfGenerateController@pdfview')->name('pdfview');
+Route::get('/reportuser/{id}', 'ReportController@index')->name('index');
 
 Route::get('/dashboard','AdminController@dashboard')->name('dashboard');
