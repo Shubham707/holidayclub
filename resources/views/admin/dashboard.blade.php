@@ -1,4 +1,4 @@
-@extends('admin.layout.header')
+@include('admin.layout.header')
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -232,7 +232,7 @@
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
-              @extends('admin.layout.nav')
+              @include('admin.layout.nav')
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
@@ -760,4 +760,4 @@
                             </ul>
                         </div>
                         <!-- /.panel-body -->
-@extends('admin.layout.footer')
+@include('admin.layout.footer')
