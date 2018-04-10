@@ -8,5 +8,6 @@ class Users extends Model
 {
     protected $table= 'users';
 
-    $fillable = ['name','email','locID','roleId'];
+    $fillable = ['name','email','password','locID','roleId'];
+    $hidden = ['isDeleted','createdBy']
 }

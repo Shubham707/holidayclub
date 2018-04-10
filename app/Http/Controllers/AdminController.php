@@ -3,7 +3,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use DB;
+use Auth;
+use Session;
+use App\Admin;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 class AdminController extends Controller
 {
    
@@ -15,10 +21,10 @@ class AdminController extends Controller
      */
 
     
-    public function __construct()
+   /* public function __construct()
     {
         $this->middleware('auth');
-    }
+    }*/
     /*public function index()
     {
         return view('admin.dashboard');
@@ -31,6 +37,34 @@ class AdminController extends Controller
         $arrayName = array('roles' => $roles, 'locations'=>$locations,'admins'=>$admins,);
         return view('admin.admin_users.index')->with($arrayName);
     }
+    
+    public function loginform()
+    {
+        return view('admin.login');
+    }
+    public function login(Request $request)
+    {
+        ///dd($request->all());
+        /*if(Auth::attempt([
+        'email'=>$request->email,
+        'password'=>$request->password,
+
+        ])){*/
+         $user= Admin::where(array('email'=>$request->email,'password'=>$request->email))->first();
+     //dd($user);
+        if($user)
+        {
+            return redirect()->route('dashboard');
+        }
+        else{
+            return redirect()->route('adminlogin');
+        }
+      //  }
+       
+     
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -52,6 +86,9 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      * name   email   phone   password    status  role 
      */
+
+
+
     public function store(Request $request)
     {
        
@@ -59,7 +96,7 @@ class AdminController extends Controller
        $email = $request->input('email');
       // $today = date("y/m/d");
        $phone = $request->input('phone');
-       $password = $request->input('password');
+       $password = bcrypt($request->input(['password']));
        $role = $request->input('role');
        $location = $request->input('location');
       $data=DB::insert("insert into tbl_webusers(name,email,phone,password,role,location) values('$name','$email','$phone','$password','$role','$location')");
@@ -138,5 +175,11 @@ class AdminController extends Controller
     public function dashboard()
     {
         return view('admin.dashboard');
+    }
+    public function logout()
+    {
+       Auth::logout();
+
+       return redirect()->route('home');
     }
 }  

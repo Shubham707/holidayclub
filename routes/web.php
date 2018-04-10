@@ -16,8 +16,9 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::get('/home','HomeController@index');
-Route::get('/admin','AdminController@index');
+Route::get('/adminlogin','AdminController@loginform')->name('loginform');
 
+Route::post('/admin_login','AdminController@login')->name('login');
 
 
 Route::get('/role','RolesController@index')->name('index');
@@ -50,4 +51,13 @@ Route::get('/configuration-detail/edit-config/{id}','ConfigurationController@edi
 Route::get('generate-pdf', 'PdfGenerateController@pdfview')->name('pdfview');
 Route::get('/reportuser/{id}', 'ReportController@index')->name('index');
 
-Route::get('/dashboard','AdminController@dashboard')->name('dashboard');
+Route::group(['middlewere'=>'auth'],function(){
+
+	Route::get('/home',function(){
+		return view('home');
+	})->name('home');
+	Route::get('/dashboard','AdminController@dashboard')->name('dashboard');
+
+    Route::get('/adminlogin','AdminController@loginform')->name('adminlogin');
+	
+});

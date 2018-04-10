@@ -8,17 +8,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Database\Eloquent\Model;
 
-class admin extends Authenticatable
+class Admin extends Authenticatable
 {
      use Notifiable;
-     protected $guard='admin';
+    
+     protected $guard='Admin';
+      protected $table='tbl_webusers';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','job_title'
+        'name', 'email', 'password','phone','role','location'
     ];
 
     /**
@@ -29,4 +31,13 @@ class admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    function is_admin()
+    {
+        if($this->admin){
+        return true;
+        }
+        else{
+        return false;
+        }
+    }
 }
