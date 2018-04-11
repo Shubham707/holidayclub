@@ -1,4 +1,4 @@
-@include('admin.layout.header')
+<?php echo $__env->make('admin.layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -224,7 +224,7 @@
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
-                @include('admin.layout.nav')
+                <?php echo $__env->make('admin.layout.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
@@ -233,7 +233,7 @@
          <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                  <a href="{{ route('member.create') }}"><button type="button" class="btn btn-primary">Add Member </button></a>
+                  <a href="<?php echo e(route('member.create')); ?>"><button type="button" class="btn btn-primary">Add Member </button></a>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -300,7 +300,7 @@
                                          <td><?= $member->member_offer;?></td>
                                          
 
-                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/member/edit')}}/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
+                                        <td><a  class="fa fa-pencil btn btn-primary" href="<?php echo e(url('/member/edit')); ?>/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
                                     </tr>
                                     <?php }?>
                                 </tbody>
@@ -320,4 +320,4 @@
             <!-- /.row -->
         </div>
             
-@include('admin.layout.footer')
+<?php echo $__env->make('admin.layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

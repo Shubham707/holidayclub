@@ -39,7 +39,7 @@
 <script src="{{ URL::asset('admin/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ URL::asset('admin/vendor/datatables-plugins/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{ URL::asset('admin/vendor/datatables-responsive/dataTables.responsive.js')}}"></script>
-
+     <script src="{{ URL::asset('admin/vendor/city.js')}}"></script>
  
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->

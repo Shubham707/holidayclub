@@ -8,11 +8,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Locations;
 
+
 class LocationsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -44,7 +45,13 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        $locationName=$request->input('locationName');
+        //dd($request->all());
+        $name=$request->locationName;
+        $status=$request->status;
+        $data=DB::insert("insert into tbl_locations(locationName,status) values('$name','$status')");
+      Session::flash('message','Record Inserted Successfully');
+      return back();
+
        
     }
 

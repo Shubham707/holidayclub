@@ -17,12 +17,11 @@ class CreateTblWebusersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
-            $table->integer('phone');
+            $table->string('phone');
             $table->string('password');
-            $table->integer('status')->default(0);
+            $table->integer('status');
             $table->integer('role');
              $table->integer('location');
-            $table->date('createDete')->default(NULL);
             $table->timestamps();
         });
     }

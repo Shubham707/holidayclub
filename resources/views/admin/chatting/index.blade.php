@@ -231,82 +231,42 @@
         </nav>
 
          <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                  <a href="{{ route('member.create') }}"><button type="button" class="btn btn-primary">Add Member </button></a>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
+            
             <!-- /.row -->
-            <div class="row">
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Members List
+                            DataTables Advanced Tables
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="pre-scrollable">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Membership ID</th>
-                                        <th>Main Applicant Name</th>
-                                        <th>Co-Applicant Name</th>
-                                        <th>Location</th>
-                                        <th>Date of Joining</th>
-                                        <th>Date of Validity</th>
-                                        <th>Tenure</th>
-                                        <th>Card Type(Season)</th>
-                                        <th>Aparment</th>
-                                        <th>Occupancy</th>
-                                        <th>Purchase Amount</th>
-                                        <th>Admin Amount</th>
-                                        <th>Total Amount</th>
-                                        <th>Initial Amount</th>
-                                        <th>Balance Amount</th>
-                                        <th>Mode of Payment</th>
-                                        <th>Executive Name</th>
-                                        <th>Manager Name</th>
-                                        <th>Extra Offer</th>
+                                        <th>Membership Id</th>
+                                        <th>Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Subject</th>
+                                        <th>Messages</th>
                                         <th>Action</th>
-
                                     </tr>
                                 </thead>
-                                
                                 <tbody>
-                                    <?php $i=1; foreach($members as $member){?>
+                                @foreach($messagess as $message)
                                     <tr class="odd gradeX">
-                                       <td><?= $i++;?></td>
-                                        <td><a href="reportuser/<?= $member->memberShipid;?>"><?= $member->memberShipid;?></a></td>
-                                         <td><?= $member->m_name;?></td>
-                                         <td><?= $member->c_name;?></td>
-                                         <td><?= $member->city;?></td>
-                                         <td><?= $member->doj;?></td>
-                                         <td><?= $member->vdate;?></td>
-                                         <td><?= $member->tenure;?></td>
-                                         <td><?= $member->ctype;?></td>
-                                         <td><?= $member->apartment;?></td>
-                                         <td><?= $member->occupancy;?></td>
-                                         <td><?= $member->purchase_amount;?></td>
-                                         <td><?= $member->admin_amount;?></td>
-                                         <td><?= $member->total_amount;?></td>
-                                         <td><?= $member->initial_payment;?></td>
-                                         <td><?= $member->bal_payment;?></td>
-                                         <td><?= $member->mode_of_payment_details;?></td>
-                                         <td><?= $member->excutive_name;?></td>
-                                         <td><?= $member->manager_name;?></td>
-                                         <td><?= $member->member_offer;?></td>
-                                         
-
-                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/member/edit')}}/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
+                                        <td>{{$message->membership_id}}</td>
+                                        <td>{{$message->name}}</td>
+                                        <td>{{$message->phone}}</td>
+                                        <td>{{$message->subject}}</td>
+                                        <td class="center">{{$message->messages}} </td>
+                                        <td class="center"><a data-toggle="modal" data-target="#reply" class="btn btn-primary fa fa-reply" href=""></a>&nbsp;&nbsp;<a class="fa fa-comments  btn btn-info" data-toggle="modal" data-target="#send" href=""></a></td>
                                     </tr>
-                                    <?php }?>
+                                    @endforeach
+                                    
                                 </tbody>
-
                             </table>
-                            </div><!-- /.table-responsive -->
+                            <!-- /.table-responsive -->
                             
                         </div>
                         <!-- /.panel-body -->
@@ -316,7 +276,74 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-                    
+            <div id="reply" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Reply</h4>
+                      </div>
+                      <div class="modal-body col-lg-12" >
+                      
+                        <form>
+                              <div class="form-group">
+                                <label for="membershipId">Membership ID</label>
+                                <input type="membershipId" class="form-control" id="membershipId" value="">
+                              </div>
+                              <div class="form-group">
+                                <label for="name">Name </label>
+                                <input type="name" class="form-control" id="name" value="">
+                              </div>
+                              <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="phone" class="form-control" id="phone" value="">
+                              </div>
+                              <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="subject" class="form-control" id="subject" value="">
+                              </div>
+                              <div class="form-group">
+                                <label for="meassage">Comment</label>
+                                <textarea name="meassage" id="meassage" class="form-control" ></textarea>
+                              </div>
+                              <div class="form-group">
+                                <label for="reply">Reply</label>
+                                <textarea name="reply" id="reply" class="form-control" ></textarea>
+                              </div>
+                             
+                              <button type="submit" class="btn btn-default">Submit</button>
+                            </form> 
+                        
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div id="send" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Send</h4>
+                      </div>
+                      <div class="modal-body">
+                        
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
             <!-- /.row -->
         </div>
             

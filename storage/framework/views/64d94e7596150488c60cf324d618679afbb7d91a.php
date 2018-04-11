@@ -1,4 +1,4 @@
-@include('admin.layout.header')
+<?php echo $__env->make('admin.layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -224,7 +224,7 @@
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
-                @include('admin.layout.nav')
+                <?php echo $__env->make('admin.layout.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
@@ -232,8 +232,8 @@
 
          <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                  <a href="{{ route('member.create') }}"><button type="button" class="btn btn-primary">Add Member </button></a>
+                 <div class="col-lg-12">
+                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModal">Add Location</button>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -242,7 +242,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Members List
+                            Locations List
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -251,56 +251,25 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Membership ID</th>
-                                        <th>Main Applicant Name</th>
-                                        <th>Co-Applicant Name</th>
                                         <th>Location</th>
-                                        <th>Date of Joining</th>
-                                        <th>Date of Validity</th>
-                                        <th>Tenure</th>
-                                        <th>Card Type(Season)</th>
-                                        <th>Aparment</th>
-                                        <th>Occupancy</th>
-                                        <th>Purchase Amount</th>
-                                        <th>Admin Amount</th>
-                                        <th>Total Amount</th>
-                                        <th>Initial Amount</th>
-                                        <th>Balance Amount</th>
-                                        <th>Mode of Payment</th>
-                                        <th>Executive Name</th>
-                                        <th>Manager Name</th>
-                                        <th>Extra Offer</th>
+                                        <th>Status</th>
                                         <th>Action</th>
 
                                     </tr>
                                 </thead>
                                 
                                 <tbody>
-                                    <?php $i=1; foreach($members as $member){?>
+                                    <?php $i=1; foreach($locations as $location){?>
                                     <tr class="odd gradeX">
                                        <td><?= $i++;?></td>
-                                        <td><a href="reportuser/<?= $member->memberShipid;?>"><?= $member->memberShipid;?></a></td>
-                                         <td><?= $member->m_name;?></td>
-                                         <td><?= $member->c_name;?></td>
-                                         <td><?= $member->city;?></td>
-                                         <td><?= $member->doj;?></td>
-                                         <td><?= $member->vdate;?></td>
-                                         <td><?= $member->tenure;?></td>
-                                         <td><?= $member->ctype;?></td>
-                                         <td><?= $member->apartment;?></td>
-                                         <td><?= $member->occupancy;?></td>
-                                         <td><?= $member->purchase_amount;?></td>
-                                         <td><?= $member->admin_amount;?></td>
-                                         <td><?= $member->total_amount;?></td>
-                                         <td><?= $member->initial_payment;?></td>
-                                         <td><?= $member->bal_payment;?></td>
-                                         <td><?= $member->mode_of_payment_details;?></td>
-                                         <td><?= $member->excutive_name;?></td>
-                                         <td><?= $member->manager_name;?></td>
-                                         <td><?= $member->member_offer;?></td>
-                                         
-
-                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/member/edit')}}/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
+                                        
+                                         <td><?= $location->locationName;?></td>
+                                         <?php if($location->status){ ?>
+                                         <td>Active</td>
+                                         <?php } else { ?>
+                                          <td>Deactive</td>
+                                        <?php } ?>
+                                        <td><a  class="fa fa-pencil btn btn-primary" href="<?php echo e(url('/location/edit')); ?>/<?= $location->id;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href="<?php echo e(url('/location/delete')); ?>/<?= $location->id;?>" onclick="return confirm('Are you sure you want to delete this item?');"></a></td>
                                     </tr>
                                     <?php }?>
                                 </tbody>
@@ -316,8 +285,47 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-                    
+            
             <!-- /.row -->
         </div>
+        <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content ">
+                  <div class="modal-header ">
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Location</h4>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <form method="post" action="<?php echo e(url('location-store')); ?>">
+                        <?php echo csrf_field();?>
+                    <div class="form-group">
+                        <label> Location Name</label>
+                        <input type="text" name="locationName" id="locationName">
+                    </div>
+                  <div class="form-group">
+                                            <label>Status</label>
+                                            <label class="radio-inline">
+                                                 
+                                                <input name="status" id="optionsRadiosInline1" value="1"  type="radio">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                 
+                                                <input name="status" id="optionsRadiosInline2" value="0" type="radio">Deactive
+                                            </label>
+                                            
+                                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    <button type="submit"  class="btn btn-info pull-left" name="submit" id="assignSections">Submit </button> 
+                  </div>
+                  </form>
+                </div>
+            </div>
+        </div></div>
             
-@include('admin.layout.footer')
+<?php echo $__env->make('admin.layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

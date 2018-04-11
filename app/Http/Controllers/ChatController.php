@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class ChatController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +14,8 @@ class ChatController extends Controller
      */
     public function index()
     {
-        //
+           $messagess= DB::table('messages')->get();
+        return view('admin.chatting.index',compact('messagess'));
     }
 
     /**

@@ -1,4 +1,4 @@
-@include('admin.layout.header')
+<?php echo $__env->make('admin.layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 <style type="text/css">
@@ -66,7 +66,7 @@ input.invalid {
             <!-- /.navbar-header -->
 
             <div class="navbar-default sidebar" role="navigation">
-                @include('admin.layout.nav')
+                <?php echo $__env->make('admin.layout.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
@@ -92,9 +92,9 @@ input.invalid {
                                     <form role="form"  name="memberForm" id="addUser" action="" method="post" role="form">
                         <div class="box-body">
                             <div class="row">
-                                @include('admin.layout.authentication')
+                                <?php echo $__env->make('admin.layout.authentication', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                               
- @include('admin.layout.footer')
+ <?php echo $__env->make('admin.layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <script>
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab

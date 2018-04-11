@@ -16,8 +16,7 @@ class CreateTblLocationsTable extends Migration
         Schema::create('tbl_locations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('locationName');
-             $table->string('parent_id');
-              $table->integer('status')->default(1);
+              $table->integer('status');
             $table->timestamps();
         });
     }

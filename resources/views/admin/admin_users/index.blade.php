@@ -285,7 +285,7 @@
                                          <?php } ?>
 
                                          <?php foreach($locations as $location){
-                                         if($location->id==$admin->location) { ?>
+                                         if($location->id == $admin->location) { ?>
                                          <td><?= $location->locationName;?></td>
                                         <?php  } ?>
 
@@ -360,14 +360,9 @@
                                 
                                        
                                         <button type="submit" class="btn btn-info" name="submit">Submit</button>
-                                        
+                                        <button type="button" class="btn btn-default pull pull-right" data-dismiss="modal">Close</button>
                                     </form>
-                                
-                 
-                         
-                          <div class="modal-footer">
-                            
-                          </div>
+                        
                         </div>
 
                       </div>

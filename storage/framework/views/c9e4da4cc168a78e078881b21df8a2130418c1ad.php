@@ -1,4 +1,4 @@
-@include('admin.layout.header')
+<?php echo $__env->make('admin.layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -224,7 +224,7 @@
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
-                @include('admin.layout.nav')
+                <?php echo $__env->make('admin.layout.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
@@ -233,7 +233,7 @@
          <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                  <a href="{{ route('member.create') }}"><button type="button" class="btn btn-primary">Add Member </button></a>
+                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModal">Add Role</button>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -242,71 +242,38 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Members List
+                            Roles List
                         </div>
+                     <?php if(Session::has('message')): ?>
+                         <div id="alert" class="alert alert-info"><?php echo e(Session::get('message')); ?></div>
+                    <?php endif; ?>
+
+                   
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="pre-scrollable">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Membership ID</th>
-                                        <th>Main Applicant Name</th>
-                                        <th>Co-Applicant Name</th>
-                                        <th>Location</th>
-                                        <th>Date of Joining</th>
-                                        <th>Date of Validity</th>
-                                        <th>Tenure</th>
-                                        <th>Card Type(Season)</th>
-                                        <th>Aparment</th>
-                                        <th>Occupancy</th>
-                                        <th>Purchase Amount</th>
-                                        <th>Admin Amount</th>
-                                        <th>Total Amount</th>
-                                        <th>Initial Amount</th>
-                                        <th>Balance Amount</th>
-                                        <th>Mode of Payment</th>
-                                        <th>Executive Name</th>
-                                        <th>Manager Name</th>
-                                        <th>Extra Offer</th>
+                                        <th>Name</th>
+                                        <th>Assign To</th>
                                         <th>Action</th>
-
+                                        
                                     </tr>
-                                </thead>
-                                
+                                </thead> 
                                 <tbody>
-                                    <?php $i=1; foreach($members as $member){?>
+                                    <?php $i=1; foreach($roles as $role){?>
                                     <tr class="odd gradeX">
-                                       <td><?= $i++;?></td>
-                                        <td><a href="reportuser/<?= $member->memberShipid;?>"><?= $member->memberShipid;?></a></td>
-                                         <td><?= $member->m_name;?></td>
-                                         <td><?= $member->c_name;?></td>
-                                         <td><?= $member->city;?></td>
-                                         <td><?= $member->doj;?></td>
-                                         <td><?= $member->vdate;?></td>
-                                         <td><?= $member->tenure;?></td>
-                                         <td><?= $member->ctype;?></td>
-                                         <td><?= $member->apartment;?></td>
-                                         <td><?= $member->occupancy;?></td>
-                                         <td><?= $member->purchase_amount;?></td>
-                                         <td><?= $member->admin_amount;?></td>
-                                         <td><?= $member->total_amount;?></td>
-                                         <td><?= $member->initial_payment;?></td>
-                                         <td><?= $member->bal_payment;?></td>
-                                         <td><?= $member->mode_of_payment_details;?></td>
-                                         <td><?= $member->excutive_name;?></td>
-                                         <td><?= $member->manager_name;?></td>
-                                         <td><?= $member->member_offer;?></td>
-                                         
-
-                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/member/edit')}}/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
+                                        <td><?= $i++;?></td>
+                                        <td><?= $role->role;?></td>
+                                        <td><?= $role->assignSections;?></td>
+                                        <td><a class="fa fa-pencil btn btn-primary" href="<?php echo e(url('role/edit-role')); ?>/<?= $role->roleId;?>"></a>&nbsp;&nbsp;&nbsp;
+                                            <a class="fa fa-trash btn btn-danger" href="<?php echo e(url('role/delete-roles')); ?>/<?= $role->roleId;?>" onclick="return confirm('Are you sure you want to delete this item?');"></a></td>
                                     </tr>
-                                    <?php }?>
+                                   <?php }?>
                                 </tbody>
-
                             </table>
-                            </div><!-- /.table-responsive -->
+                            <!-- /.table-responsive -->
                             
                         </div>
                         <!-- /.panel-body -->
@@ -315,9 +282,84 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
-                    
-            <!-- /.row -->
+             <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content ">
+                  <div class="modal-header ">
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Role</h4>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <form method="post" action="<?php echo e(url('role/store')); ?>">
+                        <?php echo csrf_field();?>
+
+                              <div class="form-group">
+                                <label for="email">Role Name</label>
+                                <input type="text" class="form-check-input" id="role">
+                              </div>
+
+                              <div class="form-group">
+                                <label for="pwd">Admin Users</label>
+                                <input type="checkbox" class="form-check-input" id="admin_user">
+                              </div>
+                               <div class="form-group">
+                                <label for="pwd">Members</label>
+                                <input type="checkbox" class="form-check-input" id="memebers">
+                              </div>
+                               <div class="form-group">
+                                <label for="pwd">Users Role</label>
+                                <input type="checkbox" class="form-check-input" id="user_role">
+                              </div>
+                               <div class="form-group">
+                                <label for="pwd">Locations</label>
+                                <input type="checkbox" class="form-check-input" id="locations">
+                              </div>
+                               <div class="form-group">
+                                <label for="pwd">Vouchers</label>
+                                <input type="checkbox" class="form-check-input" id="vouchers">
+                              </div>
+                              <div class="form-group">
+                                <label for="pwd">Updates</label>
+                                <input type="checkbox" class="form-check-input" id="updates">
+                              </div>
+                               <div class="form-group">
+                                <label for="pwd">Feedback</label>
+                                <input type="checkbox" class="form-check-input" id="feedback">
+                              </div>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                        
+                
+          <!--   <div class="well" style="max-height: 300px;overflow: auto;">
+                <ul class="list-group checked-list-box">
+                  <li class="list-group-item">Admin Users</li>
+                  <li class="list-group-item" data-checked="true">Members</li>
+                  <li class="list-group-item">Users Role</li>
+                  <li class="list-group-item">Locations</li>
+                  <li class="list-group-item">Vouchers</li>
+                  <li class="list-group-item">Updates</li>
+                  <li class="list-group-item">FeedBack</li> 
+                </ul>
+            </div> -->
+        </div></div>
+                  
+            </div>
         </div>
+            <!-- /.row -->
             
-@include('admin.layout.footer')
+            <!-- /.row -->
+ <script>
+   window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+        });
+        }, 4000);
+    </script>
+  </div>
+
+    
+            
+<?php echo $__env->make('admin.layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

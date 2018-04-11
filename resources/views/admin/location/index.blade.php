@@ -264,8 +264,11 @@
                                        <td><?= $i++;?></td>
                                         
                                          <td><?= $location->locationName;?></td>
-                                         <td><?= $location->status;?></td>
-                                        
+                                         <?php if($location->status){ ?>
+                                         <td>Active</td>
+                                         <?php } else { ?>
+                                          <td>Deactive</td>
+                                        <?php } ?>
                                         <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/location/edit')}}/<?= $location->id;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href="{{url('/location/delete')}}/<?= $location->id;?>" onclick="return confirm('Are you sure you want to delete this item?');"></a></td>
                                     </tr>
                                     <?php }?>
@@ -297,20 +300,24 @@
                   </div>
                   
                   <div class="modal-body">
-                    <form method="post" action="{{ url('role/store') }}">
+                    <form method="post" action="{{ url('location-store') }}">
                         <?php echo csrf_field();?>
                     <div class="form-group">
                         <label> Location Name</label>
                         <input type="text" name="locationName" id="locationName">
                     </div>
-                    <div class="form-group">
-                      
-                        <label>Status</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="radio" name="status">Active</label>&nbsp;&nbsp;&nbsp;<label><input type="radio" name="status">Deactive</label>
-                        
-                     </div>
-
-
-                   
+                  <div class="form-group">
+                                            <label>Status</label>
+                                            <label class="radio-inline">
+                                                 
+                                                <input name="status" id="optionsRadiosInline1" value="1"  type="radio">Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                 
+                                                <input name="status" id="optionsRadiosInline2" value="0" type="radio">Deactive
+                                            </label>
+                                            
+                                        </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>

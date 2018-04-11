@@ -13,7 +13,7 @@ class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+       // $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class RolesController extends Controller
     public function index()
     {
         $roles= Roles::all();
-        return view('admin.role.index',compact('roles'));
+       return view('admin.role.index',compact('roles'));
     }
 
     /**

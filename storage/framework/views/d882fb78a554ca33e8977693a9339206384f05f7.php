@@ -1,4 +1,4 @@
-@include('admin.layout.header')
+<?php echo $__env->make('admin.layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -224,7 +224,7 @@
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
-                @include('admin.layout.nav')
+                <?php echo $__env->make('admin.layout.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
@@ -233,84 +233,57 @@
          <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                  <a href="{{ route('member.create') }}"><button type="button" class="btn btn-primary">Add Member </button></a>
+                  
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+           
             <div class="row">
                 <div class="col-lg-12">
+                   <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Members List
+                            Reporting All Data User And Member
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="pre-scrollable">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Membership ID</th>
-                                        <th>Main Applicant Name</th>
-                                        <th>Co-Applicant Name</th>
-                                        <th>Location</th>
-                                        <th>Date of Joining</th>
-                                        <th>Date of Validity</th>
-                                        <th>Tenure</th>
-                                        <th>Card Type(Season)</th>
-                                        <th>Aparment</th>
-                                        <th>Occupancy</th>
-                                        <th>Purchase Amount</th>
-                                        <th>Admin Amount</th>
-                                        <th>Total Amount</th>
-                                        <th>Initial Amount</th>
-                                        <th>Balance Amount</th>
-                                        <th>Mode of Payment</th>
-                                        <th>Executive Name</th>
-                                        <th>Manager Name</th>
-                                        <th>Extra Offer</th>
-                                        <th>Action</th>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-pills">
+                                <li class="active"><a href="#home-pills" data-toggle="tab">User</a>
+                                </li>
+                                <li><a href="#profile-pills" data-toggle="tab">Account</a>
+                                </li>
+                                <li><a href="#messages-pills" data-toggle="tab">Messages</a>
+                                </li>
+                                <li><a href="#settings-pills" data-toggle="tab">Communication</a>
+                                </li>
+                            </ul>
 
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>
-                                    <?php $i=1; foreach($members as $member){?>
-                                    <tr class="odd gradeX">
-                                       <td><?= $i++;?></td>
-                                        <td><a href="reportuser/<?= $member->memberShipid;?>"><?= $member->memberShipid;?></a></td>
-                                         <td><?= $member->m_name;?></td>
-                                         <td><?= $member->c_name;?></td>
-                                         <td><?= $member->city;?></td>
-                                         <td><?= $member->doj;?></td>
-                                         <td><?= $member->vdate;?></td>
-                                         <td><?= $member->tenure;?></td>
-                                         <td><?= $member->ctype;?></td>
-                                         <td><?= $member->apartment;?></td>
-                                         <td><?= $member->occupancy;?></td>
-                                         <td><?= $member->purchase_amount;?></td>
-                                         <td><?= $member->admin_amount;?></td>
-                                         <td><?= $member->total_amount;?></td>
-                                         <td><?= $member->initial_payment;?></td>
-                                         <td><?= $member->bal_payment;?></td>
-                                         <td><?= $member->mode_of_payment_details;?></td>
-                                         <td><?= $member->excutive_name;?></td>
-                                         <td><?= $member->manager_name;?></td>
-                                         <td><?= $member->member_offer;?></td>
-                                         
-
-                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/member/edit')}}/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
-                                    </tr>
-                                    <?php }?>
-                                </tbody>
-
-                            </table>
-                            </div><!-- /.table-responsive -->
-                            
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="home-pills">
+                                    <h4>Home Tab</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                                <div class="tab-pane fade" id="profile-pills">
+                                    <h4>Profile Tab</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                                <div class="tab-pane fade" id="messages-pills">
+                                    <h4>Messages Tab</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                                <div class="tab-pane fade" id="settings-pills">
+                                    <h4>Settings Tab</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
+                    <!-- /.panel -->
+                </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
@@ -320,4 +293,4 @@
             <!-- /.row -->
         </div>
             
-@include('admin.layout.footer')
+<?php echo $__env->make('admin.layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

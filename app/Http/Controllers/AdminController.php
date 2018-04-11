@@ -5,6 +5,7 @@ use App\Http\Requests;
 use DB;
 use Auth;
 use Session;
+use Validation;
 use App\Admin;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
@@ -21,10 +22,10 @@ class AdminController extends Controller
      */
 
     
-   /* public function __construct()
+    public function __construct()
     {
-        $this->middleware('auth');
-    }*/
+        //$this->middleware('auth:admin');
+    }
     /*public function index()
     {
         return view('admin.dashboard');
@@ -44,13 +45,13 @@ class AdminController extends Controller
     }
     public function login(Request $request)
     {
-        ///dd($request->all());
+        //dd($request->all());
         /*if(Auth::attempt([
         'email'=>$request->email,
         'password'=>$request->password,
 
         ])){*/
-         $user= Admin::where(array('email'=>$request->email,'password'=>$request->email))->first();
+         $user= Admin::where('email',$request->email)->first();
      //dd($user);
         if($user)
         {
@@ -91,6 +92,7 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+        
        
        $name = $request->input('name');
        $email = $request->input('email');

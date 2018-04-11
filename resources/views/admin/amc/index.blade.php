@@ -232,9 +232,7 @@
 
          <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                  <a href="{{ route('member.create') }}"><button type="button" class="btn btn-primary">Add Member </button></a>
-                </div>
+               
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
@@ -242,67 +240,52 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Members List
+                            <a href="{{ url('/amc/add') }}" type="button" class="btn btn-primary btn-md">Add AMC Amount </a> 
+
+                          <!--  @if (session('success'))
+                                <div class="flash-message">
+                                <div class="alert alert-success">
+
+                                </div>
+                                </div>
+                            @endif -->
+                            @if (Session::has('message'))
+                                 <div id="alert" class="alert alert-info">{{ Session::get('message') }}</div>
+                            @endif
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="pre-scrollable">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
+
                                     <tr>
                                         <th>#</th>
                                         <th>Membership ID</th>
-                                        <th>Main Applicant Name</th>
-                                        <th>Co-Applicant Name</th>
-                                        <th>Location</th>
-                                        <th>Date of Joining</th>
-                                        <th>Date of Validity</th>
-                                        <th>Tenure</th>
-                                        <th>Card Type(Season)</th>
-                                        <th>Aparment</th>
-                                        <th>Occupancy</th>
-                                        <th>Purchase Amount</th>
-                                        <th>Admin Amount</th>
-                                        <th>Total Amount</th>
-                                        <th>Initial Amount</th>
-                                        <th>Balance Amount</th>
-                                        <th>Mode of Payment</th>
-                                        <th>Executive Name</th>
-                                        <th>Manager Name</th>
-                                        <th>Extra Offer</th>
+                                        <th>Member Name</th>
+                                        <th>Email ID</th>
+                                        <th>Mobile NO</th>
+                                        <th>Amount </th>
+                                        <th>DSA Name</th>
                                         <th>Action</th>
-
+                                       
                                     </tr>
                                 </thead>
                                 
                                 <tbody>
-                                    <?php $i=1; foreach($members as $member){?>
+                                  <?php $i=1; foreach($amc as $amcupdate) {?>
                                     <tr class="odd gradeX">
-                                       <td><?= $i++;?></td>
-                                        <td><a href="reportuser/<?= $member->memberShipid;?>"><?= $member->memberShipid;?></a></td>
-                                         <td><?= $member->m_name;?></td>
-                                         <td><?= $member->c_name;?></td>
-                                         <td><?= $member->city;?></td>
-                                         <td><?= $member->doj;?></td>
-                                         <td><?= $member->vdate;?></td>
-                                         <td><?= $member->tenure;?></td>
-                                         <td><?= $member->ctype;?></td>
-                                         <td><?= $member->apartment;?></td>
-                                         <td><?= $member->occupancy;?></td>
-                                         <td><?= $member->purchase_amount;?></td>
-                                         <td><?= $member->admin_amount;?></td>
-                                         <td><?= $member->total_amount;?></td>
-                                         <td><?= $member->initial_payment;?></td>
-                                         <td><?= $member->bal_payment;?></td>
-                                         <td><?= $member->mode_of_payment_details;?></td>
-                                         <td><?= $member->excutive_name;?></td>
-                                         <td><?= $member->manager_name;?></td>
-                                         <td><?= $member->member_offer;?></td>
+                                       <td><?= $i++; ?></td>
+                                        <td><?= $amcupdate->txn_id;?></td>
+                                         <td><?= $amcupdate->member_id;?></td>
+                                         <td><?= $amcupdate->name;?></td>
+                                         <td><?= $amcupdate->email;?></td>
+                                         <td><?= $amcupdate->mobile;?></td>
+                                         <td><?= $amcupdate->year;?></td>                                    
                                          
-
-                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/member/edit')}}/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
+                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{ url('/amc/edit')}}/<?= $amcupdate->id;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href="{{url('/amc/del')}}/<?= $amcupdate->id;?>" onclick="return confirm('Are you sure you want to delete this item?');"></a></td>
                                     </tr>
-                                    <?php }?>
+                                  <?php } ?>
                                 </tbody>
 
                             </table>
@@ -316,8 +299,18 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-                    
+            <!-- model -->
+            
+            <!-- close -->
+            
             <!-- /.row -->
         </div>
-            
+      
+    <script>
+   window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    </script>
 @include('admin.layout.footer')

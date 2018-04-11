@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Payment;
+use App\Amc;
 
-class PaymentController extends Controller
+class AmcController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = DB::table('tbl_paymentdetails')->get();
-        return view('admin.payment.index',compact('payments'));
+        $amc = DB::table('tbl_amcdetails')->get();
+        return view('admin.amc.index', compact('amc'));
     }
 
     /**
@@ -26,7 +26,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        return view('admin.payment.add');
+        return view('admin.amc.add');
     }
 
     /**
@@ -59,8 +59,8 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        $paymentEdit = Payment::where('id',$id)->get();
-        return view('admin.payment.edit', compact('paymentEdit'));
+        $amcs = Amc::where('id',$id)->get();
+        return view('admin.amc.edit',compact('amcs'));
     }
 
     /**
@@ -83,7 +83,8 @@ class PaymentController extends Controller
      */
     public function destroy($id)
     {
-        Payment::where('id',$id)->delete();
+         Amc::where('id',$id)->delete();
         return back();
+    
     }
 }

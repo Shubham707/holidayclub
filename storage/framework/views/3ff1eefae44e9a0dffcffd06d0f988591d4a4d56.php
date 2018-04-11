@@ -1,4 +1,4 @@
-@include('admin.layout.header')
+<?php echo $__env->make('admin.layout.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -224,7 +224,7 @@
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
-                @include('admin.layout.nav')
+                <?php echo $__env->make('admin.layout.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
@@ -232,9 +232,7 @@
 
          <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                  <a href="{{ route('member.create') }}"><button type="button" class="btn btn-primary">Add Member </button></a>
-                </div>
+               
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
@@ -242,7 +240,17 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Members List
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">ADD </button>
+                          <!--  <?php if(session('success')): ?>
+                                <div class="flash-message">
+                                <div class="alert alert-success">
+
+                                </div>
+                                </div>
+                            <?php endif; ?> -->
+                            <?php if(Session::has('message')): ?>
+                                 <div id="alert" class="alert alert-info"><?php echo e(Session::get('message')); ?></div>
+                            <?php endif; ?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -251,56 +259,37 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Membership ID</th>
-                                        <th>Main Applicant Name</th>
-                                        <th>Co-Applicant Name</th>
+                                        <th>DSA Name</th>
+                                        <th>Email-ID</th>
+                                        <th>Phone No.</th>
+                                        <th>Role</th>
                                         <th>Location</th>
-                                        <th>Date of Joining</th>
-                                        <th>Date of Validity</th>
-                                        <th>Tenure</th>
-                                        <th>Card Type(Season)</th>
-                                        <th>Aparment</th>
-                                        <th>Occupancy</th>
-                                        <th>Purchase Amount</th>
-                                        <th>Admin Amount</th>
-                                        <th>Total Amount</th>
-                                        <th>Initial Amount</th>
-                                        <th>Balance Amount</th>
-                                        <th>Mode of Payment</th>
-                                        <th>Executive Name</th>
-                                        <th>Manager Name</th>
-                                        <th>Extra Offer</th>
                                         <th>Action</th>
-
+                                       
                                     </tr>
                                 </thead>
                                 
                                 <tbody>
-                                    <?php $i=1; foreach($members as $member){?>
+                                    <?php $i=1; foreach($admins as $admin){?>
                                     <tr class="odd gradeX">
                                        <td><?= $i++;?></td>
-                                        <td><a href="reportuser/<?= $member->memberShipid;?>"><?= $member->memberShipid;?></a></td>
-                                         <td><?= $member->m_name;?></td>
-                                         <td><?= $member->c_name;?></td>
-                                         <td><?= $member->city;?></td>
-                                         <td><?= $member->doj;?></td>
-                                         <td><?= $member->vdate;?></td>
-                                         <td><?= $member->tenure;?></td>
-                                         <td><?= $member->ctype;?></td>
-                                         <td><?= $member->apartment;?></td>
-                                         <td><?= $member->occupancy;?></td>
-                                         <td><?= $member->purchase_amount;?></td>
-                                         <td><?= $member->admin_amount;?></td>
-                                         <td><?= $member->total_amount;?></td>
-                                         <td><?= $member->initial_payment;?></td>
-                                         <td><?= $member->bal_payment;?></td>
-                                         <td><?= $member->mode_of_payment_details;?></td>
-                                         <td><?= $member->excutive_name;?></td>
-                                         <td><?= $member->manager_name;?></td>
-                                         <td><?= $member->member_offer;?></td>
-                                         
+                                        <td><?= $admin->name;?></td>
+                                         <td><?= $admin->email;?></td>
+                                         <td><?= $admin->phone;?></td>
+                                        
+                                         <?php foreach ($roles as $rol) {
+                                             if ($rol->roleId==$admin->role) { ?>
+                                                 <td><?= $rol->role;?></td>
+                                             <?php }?>
+                                         <?php } ?>
 
-                                        <td><a  class="fa fa-pencil btn btn-primary" href="{{url('/member/edit')}}/<?= $member->memberShipid;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href=""></a></td>
+                                         <?php foreach($locations as $location){
+                                         if($location->id==$admin->location) { ?>
+                                         <td><?= $location->locationName;?></td>
+                                        <?php  } ?>
+
+                                        <?php } ?>
+                                        <td><a  class="fa fa-pencil btn btn-primary" href="<?php echo e(url('/admin-user/edit-admin')); ?>/<?= $admin->id;?>"></a>&nbsp;&nbsp;&nbsp;<a class="fa fa-trash btn btn-danger" href="<?php echo e(url('/admin-user/delete-admin')); ?>/<?= $admin->id;?>" onclick="return confirm('Are you sure you want to delete this item?');"></a></td>
                                     </tr>
                                     <?php }?>
                                 </tbody>
@@ -316,8 +305,85 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-                    
+            <!-- model -->
+            <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                           
+                            <h4 class="modal-title">Add Admin</h4>
+                          </div>
+                          <div class="modal-body">
+                       
+                        
+                                    <form role="form" method="post" action="<?php echo e(route('store')); ?>">
+                                        <?php echo csrf_field();?>
+                                        <div class="form-group">
+                                            <label>DSA Name</label>
+                                            <input type="text" class="form-control" name="name" id="dsa_name" placeholder="Enter DSA Name" required>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email-ID</label>
+                                            <input type="email" class="form-control" name="email" id="dsa_email" placeholdesr="Enter Email-Id" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control" name="password" id="dsa_pass" placeholder="Password" required>
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                            <label>Mobile No.</label>
+                                            <input type="number" onkeypress="phoneno()" class="form-control" maxlength="10" pattern="\d{10}" name="phone" id="dsa_phone" placeholder="Enter Phone" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Role</label>
+                                            <select class="form-control" name="role" id="dsa_role"  required>
+                                                <option>Please Select Role</option>
+                                                <?php foreach($roles as $role){?>
+                                                <option value="<?php echo $role->roleId?>"><?php echo $role->role?></option><?php }?>
+                                        </select></div>
+
+                                        <div class="form-group">
+                                            <label>Location</label>
+                                            <select  class="form-control" name="location" id="location" placeholder="Enter text" required>
+                                                <option>Please Select</option>
+                                                <?php foreach($locations as $location){ ?>
+                                                <option value="<?php echo $location->id;?>"><?php echo $location->locationName;?></option>
+                                                <?php }?>
+                                            </select>
+                                        </div>
+                                        
+                                
+                                       
+                                        <button type="submit" class="btn btn-info" name="submit">Submit</button>
+                                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        
+                                    </form>
+                                
+                 
+                         
+                          <div class="modal-footer">
+                            
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+            <!-- close -->
+            
             <!-- /.row -->
         </div>
-            
-@include('admin.layout.footer')
+      
+    <script>
+   window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+
+    </script>
+
+<?php echo $__env->make('admin.layout.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
